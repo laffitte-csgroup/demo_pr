@@ -1,3 +1,4 @@
+import prefect
 from prefect import task, Flow, Parameter
 from prefect.storage import GitHub
 from prefect.run_configs import UniversalRun
@@ -11,7 +12,7 @@ with Flow("demo_pr_github") as flow:
   name = Parameter('name', default = 'Bob')
   hello_world(name)
 
-flow.storage = GitHub(repo="laffitte-csgroup/demo_pr", path="/demo.py")
+flow.storage = GitHub(repo="laffitte-csgroup/demo_pr", path="/demo.py", stored_as_script=True)
 
 flow.run_config = UniversalRun(labels=['sde-scheduling'])
 
